@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+@import "./_parts/variables";
+@import "./_parts/mixin";
+@import "./_parts/fonts";
+
+body {
+    background-color: $lx-core-bg-color;
+    font-family: 'PingFangSC';
+    font-size: 13px;
+    color: $lx-core-font-color;
+    -webkit-overflow-scrolling : touch;
+}
+* {
+        margin: 0;
+        padding: 0;
+}
+li{
+        list-style: none;
+}
+a,a:hover {
+        text-decoration: none;
+}

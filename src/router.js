@@ -14,6 +14,26 @@ export default new Router({
       component: Home
     },
     {
+      path: '/details',
+      name: 'details',
+      component: () => import(/* webpackChunkName: "details" */ './views/Details/details.vue'),
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import(/* webpackChunkName: "details" */ './views/register/index.vue'),
+    },
+    {
+      path: '/trail',
+      name: 'trail',
+      component: () => import(/* webpackChunkName: "details" */ './views/trail/index.vue'),
+    },
+    {
+      path: '/invite',
+      name: 'invite',
+      component: () => import(/* webpackChunkName: "details" */ './views/register/invite.vue'),
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
@@ -23,3 +43,4 @@ export default new Router({
     }
   ]
 })
+

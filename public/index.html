@@ -13,5 +13,16 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+      if(returnCitySN){
+        let cityCN = returnCitySN["cname"]
+        let cityIp = returnCitySN["cip"]
+        sessionStorage.setItem('_cip__', cityIp)
+        sessionStorage.setItem('_cName__', cityCN)
+
+      }
+
+    </script>
   </body>
 </html>
