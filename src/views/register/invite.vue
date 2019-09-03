@@ -1,10 +1,11 @@
 <template>
     <div class="invite-box" :class="{show:isShow}">
         <div class="qrcode-body">
+            <img class="qrCode" src="./_img/qrCode.png" :style="qrCodeStyle" alt="">
             <canvas ref="qrcode"></canvas>
         </div>
-        <img class="qrCode" src="./_img/qrCode.png" :style="qrCodeStyle" alt="">
-<!--        <img :src="qrcodeImg" v-show="isShow" alt="">-->
+
+        <img :src="qrcodeImg" v-show="isShow" alt="" style="position: absolute;top:0;left: 0;z-index: 9">
     </div>
 </template>
 <script>
@@ -37,6 +38,14 @@ export default {
         console.log(screenWidth,this.qrCodeStyle)
     },
     methods: {
+        setCanvas() {
+          let convasObj = this.$refs.qrcode;
+          convasObj.width = screenWidth;
+          convasObj.height = '100%';
+
+          let context = convasObj.getContext('2d')
+          context.drawImage(this.qrcodeImg,0,0)
+        },
         // 分享海报生成
         capture() {
 

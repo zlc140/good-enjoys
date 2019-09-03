@@ -21,3 +21,16 @@ li{
 a,a:hover {
         text-decoration: none;
 }
+.imgIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.code-icon{
+  background: url("../image/code-icon.png")no-repeat center center;
+  background-size: 100%;
+}
+.invite-icon{
+  background: url("../image/invite-icon.png")no-repeat center center;
+  background-size: 100%;
+}

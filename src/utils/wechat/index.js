@@ -1,7 +1,7 @@
 import Url from './url';
 // 微信配置
 const wxConf = {
-    appId: 'wx5db1f717b73bf215', //wx2eb3e05b46f61f34（lovego.tesm），wx5db1f717b73bf215(测试)，wx65592301759db4a4（好享试）
+    appId: 'wx65592301759db4a4', //wx2eb3e05b46f61f34（lovego.tesm），wx5db1f717b73bf215(测试)，wx65592301759db4a4（好享试）
     state: 'lona',
     jsApiList: [  ]
 };

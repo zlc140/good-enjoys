@@ -13,7 +13,7 @@
                 </div>
                 <div class="form-item">
                     <label>
-                        <span class="icon">&#xe69f;</span>
+                        <span class="imgIcon code-icon"></span>
                     </label>
                     <van-field v-model="registerForm.code"
                                clearable placeholder="请输入验证码" >
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-item">
                     <label>
-                        <span class="icon">&#xe69f;</span>
+                        <span class="imgIcon invite-icon"></span>
                     </label>
                     <van-field v-model="registerForm.invitationCode"  placeholder="请输入邀请码" />
                 </div>

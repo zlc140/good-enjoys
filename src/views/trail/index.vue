@@ -129,7 +129,8 @@
         },
         methods: {
             async getData() {
-                const { success, code, data, message } = await api.trial.getDetails({ id: 175812049018818560 });
+                let id = this.$route.query.id || 175812049018818560
+                const { success, code, data, message } = await api.trial.getDetails({ id: id });
                 if (success && code === 200) {
                     this.imageShowSrc = configs.IMAGE_SRC + data.mainImg;
                     this.currency = data.triaNum;
@@ -157,9 +158,9 @@
                 // 获取还剩多少分钟
                 const minute = Math.floor(timediff / 60 % 60);
                 this.endTime = {
-                    day,
-                    hour,
-                    minute,
+                    day: day > 0 ? day : 0,
+                    hour: hour > 0 ? hour : 0,
+                    minute: minute > 0 ? minute : 0,
                 };
                 setTimeout(() => {
                     this.getSurplusTime(time);

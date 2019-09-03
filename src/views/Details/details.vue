@@ -1,5 +1,14 @@
 <template>
     <div class="details">
+<!--        <div class="download" >-->
+<!--            <span class="close">+</span>-->
+<!--            <img src="../../assets/image/login-bg.png"/>-->
+<!--            <div>-->
+<!--                <p class="title">好享试</p>-->
+<!--                <p>开启生活之道</p>-->
+<!--            </div>-->
+<!--            <button>立即下载</button>-->
+<!--        </div>-->
         <div v-if="query.type == 'plantingGrass' || query.type == 'brand'">
             <h2>{{ articleName }}</h2>
             <div class="detail-info" v-html="articleInfo"></div>
@@ -123,14 +132,37 @@ export default {
             })
 
 
-        }
+        },
+        clickDownload() {
+            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+                var loadDateTime = new Date();
+                window.location = "...";//schema链接或者universal link
+                window.setTimeout(function() { //如果没有安装app,便会执行setTimeout跳转下载页
+                    var timeOutDateTime = new Date();
+                    if (timeOutDateTime - loadDateTime < 5000) {
+                        window.location = "..."; //ios下载地址
+                    } else {
+                        window.close();
+                    }
+                }, 500);
+
+            } else if (navigator.userAgent.match(/android/i)) {
+                var state = null;
+                try {
+                    window.location = '...'; //schema链接或者universal link
+                    window.setTimeout(function() {
+                        window.location = "..."; //android下载地址
+                    }, 500);
+                } catch (e) {}
+            }
+        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
     .details {
-        padding: 20px 0px;
+        padding:20px 0px;
         background: #ffffff;
         h2 {
             // text-align: center;
@@ -139,6 +171,43 @@ export default {
         }
         .detail-info {
             padding: 20px;
+        }
+    }
+    .download{
+        margin-top: -20px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 15px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #f0f0f0;
+        div{
+            flex-grow: 2;
+            text-align: left;
+            padding-left: 10px;
+            .title{
+                font-size: 14px;
+                font-weight: 600;
+                color: #888;
+            }
+        }
+        .close{
+            font-size: 30px;
+            transform: rotate(40deg);
+        }
+        img{
+            width: 40px;
+            height: 40px;
+        }
+        button{
+            padding: 5px 15px;
+            outline: none;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
         }
     }
 </style>
