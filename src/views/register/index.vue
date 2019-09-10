@@ -121,7 +121,6 @@ export default {
 
         },
         goLogin() {
-            console.log(this.registerForm)
             let errMessge = '';
             if(this.registerForm.mobile) {
                 errMessge = '请填写手机号'

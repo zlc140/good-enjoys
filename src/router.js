@@ -3,10 +3,10 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 
 Vue.use(Router)
-
+// process.env.BASE_URL
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: 'wechat',
   routes: [
     {
       path: '/',

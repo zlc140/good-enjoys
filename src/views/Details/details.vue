@@ -35,19 +35,22 @@ export default {
         }
     },
     created() {
+
         const query = this.$route.query;
         this.query = query;
         if(query.invitationCode) { //存储邀请码
             sessionStorage.setItem('invitationCode', query.invitationCode)
         }
-        if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
+        if(!wechat.isWechat) {
+            this.getData();
+        }else if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
             sessionStorage.setItem('__query_obj__', JSON.stringify(query))
             //启动授权
             if(!sessionStorage.getItem('isAuthorize')) {
                 sessionStorage.setItem('isAuthorize','true')
                 wechat.authorize()
             }
-        }else if(query.code){
+        }else if(query.code && !sessionStorage.getItem('__openId__')){
             const codevalue = query.code+ ''
             this.getOpenId(codevalue)
         }else {
@@ -77,6 +80,15 @@ export default {
             } else {
                 this.$toast(message);
             }
+
+        },
+        goRegister() {
+            this.$router.push({
+                path: '/register',
+                query: {
+                    invitationCode: sessionStorage.getItem('invitationCode') || '1234'
+                }
+            })
         },
         /**
          * getApplyDetail 获取试用详情
@@ -118,7 +130,7 @@ export default {
                     this.$router.push({
                         path: '/register',
                         query: {
-                            invitationCode: sessionStorage.getItem('invitationCode') || '1234'
+                            invitationCode: sessionStorage.getItem('invitationCode') || ''
                         }
                     })
                 }else if(res.code == 500){
@@ -168,6 +180,9 @@ export default {
             // text-align: center;
             font-weight: normal;
             margin-left: 20px;
+        }
+        &>div{
+            overflow-x: hidden;
         }
         .detail-info {
             padding: 20px;
