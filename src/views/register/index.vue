@@ -140,9 +140,9 @@ export default {
                 openid: sessionStorage.getItem('short_time_openId'),
                 regSource:3,
                 city: sessionStorage.getItem('_cName__'),
-                regge: userInfo.image || '',
-                nicion: sessionStorage.getItem('_cip__'),
-                imakname: userInfo.nickname || ''
+                image: userInfo.image || '',
+                region: sessionStorage.getItem('_cip__'),
+                nickname: userInfo.nickname || ''
             }
             props = Object.assign(props, this.registerForm)
             console.log(props)
