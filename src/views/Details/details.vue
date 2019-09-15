@@ -40,7 +40,9 @@ export default {
         if(query.invitationCode) { //存储邀请码
             sessionStorage.setItem('invitationCode', query.invitationCode)
         }
-        if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
+        if(!wechat.isWechat){
+            this.getData();
+        }else  if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
             sessionStorage.setItem('__query_obj__', JSON.stringify(query))
             //启动授权
             if(!sessionStorage.getItem('isAuthorize')) {
