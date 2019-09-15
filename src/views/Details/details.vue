@@ -34,27 +34,64 @@ export default {
             query: ''
         }
     },
-    created() {
-        const query = this.$route.query;
-        this.query = query;
-        if(query.invitationCode) { //存储邀请码
-            sessionStorage.setItem('invitationCode', query.invitationCode)
+    beforeRouteEnter(to, from, next) {
+        if(to.query.invitationCode) { //存储邀请码
+            sessionStorage.setItem('invitationCode', to.query.invitationCode)
         }
-        if(!wechat.isWechat){
-            this.getData();
-        }else  if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
-            sessionStorage.setItem('__query_obj__', JSON.stringify(query))
-            //启动授权
-            if(!sessionStorage.getItem('isAuthorize')) {
-                sessionStorage.setItem('isAuthorize','true')
+        if(to.query.id && to.query.type){
+            sessionStorage.setItem('__query_obj__', JSON.stringify(to.query))
+        }
+
+        if(wechat.isWechat) {
+            if(!to.query.code && !sessionStorage.getItem('__openId__')){
                 wechat.authorize()
+                return next(false);
+            }else {
+                let checkOpen = sessionStorage.getItem('__openId__') ? false : to.query.code;
+                return next(vm => {
+                    vm.getOpenId(checkOpen)
+                    let datas = sessionStorage.getItem('__query_obj__')
+                    if(datas) {
+                        let {id, type} = JSON.parse(datas)
+                        vm.$router.replace({
+                            path: '/wechat',
+                            query: {
+                                id: id,
+                                type: type
+                            }
+                        })
+                    }
+                })
             }
-        }else if(query.code){
-            const codevalue = query.code+ ''
-            this.getOpenId(codevalue)
-        }else {
-            this.getData();
+
         }
+        next()
+
+    },
+    created() {
+
+        this.query = this.$route.query || JSON.parse(sessionStorage.getItem('__query_obj__'));
+
+        this.getData()
+        // if(query.invitationCode) { //存储邀请码
+        //     sessionStorage.setItem('invitationCode', query.invitationCode)
+        // }
+        // if(!wechat.isWechat){
+        //     this.getData();
+        // }else if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
+        //
+        //     sessionStorage.setItem('__query_obj__', JSON.stringify(query))
+        //     //启动授权
+        //     if(!sessionStorage.getItem('isAuthorize')) {
+        //         sessionStorage.setItem('isAuthorize','true')
+        //         wechat.authorize()
+        //     }
+        // }else if(query.code && !sessionStorage.getItem('__openId__')){
+        //     const codevalue = query.code+ ''
+        //     this.getOpenId(codevalue)
+        // }else {
+        //     this.getData();
+        // }
     },
     methods: {
         getData() {
@@ -79,6 +116,15 @@ export default {
             } else {
                 this.$toast(message);
             }
+
+        },
+        goRegister() {
+            this.$router.push({
+                path: '/register',
+                query: {
+                    invitationCode: sessionStorage.getItem('invitationCode') || '1234'
+                }
+            })
         },
         /**
          * getApplyDetail 获取试用详情
@@ -120,17 +166,17 @@ export default {
                     this.$router.push({
                         path: '/register',
                         query: {
-                            invitationCode: sessionStorage.getItem('invitationCode') || '1234'
+                            invitationCode: sessionStorage.getItem('invitationCode') || ''
                         }
                     })
                 }else if(res.code == 500){
                     this.getData()
                 }else{
-                    this.$toast(res.message)
+                    // this.$toast(res.message)
                 }
 
             }).catch((err) => {
-                this.$toast(err);
+                // this.$toast(err);
             })
 
 
@@ -170,6 +216,9 @@ export default {
             // text-align: center;
             font-weight: normal;
             margin-left: 20px;
+        }
+        &>div{
+            overflow-x: hidden;
         }
         .detail-info {
             padding: 20px;

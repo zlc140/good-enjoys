@@ -121,7 +121,6 @@ export default {
 
         },
         goLogin() {
-            console.log(this.registerForm)
             let errMessge = '';
             if(this.registerForm.mobile) {
                 errMessge = '请填写手机号'
@@ -140,9 +139,9 @@ export default {
                 openid: sessionStorage.getItem('short_time_openId'),
                 regSource:3,
                 city: sessionStorage.getItem('_cName__'),
-                regge: userInfo.image || '',
-                nicion: sessionStorage.getItem('_cip__'),
-                imakname: userInfo.nickname || ''
+                image: userInfo.image || '',
+                region: sessionStorage.getItem('_cip__'),
+                nickname: userInfo.nickname || ''
             }
             props = Object.assign(props, this.registerForm)
             console.log(props)
@@ -153,7 +152,11 @@ export default {
                     this.$router.go(-1);
                 }else {
                     this.$toast(res.message)
+                    this.$router.go(-1);
                 }
+            }).catch(err => {
+                this.$toast(err)
+                this.$router.go(-1);
             })
         }
     }
