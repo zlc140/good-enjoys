@@ -29,7 +29,6 @@ module.exports = {
             .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
     },
     devServer: {// 环境配置
-        host: 'localhost',
         port: 8081,
         hotOnly: false,
         open: true, //配置自动启动浏览器

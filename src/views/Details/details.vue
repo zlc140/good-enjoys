@@ -222,6 +222,9 @@ export default {
         }
         .detail-info {
             padding: 20px;
+            *{
+                max-width: 100%;
+            }
         }
     }
     .download{

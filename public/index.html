@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<!--    <meta http-equiv="c-Security-Policy" content="upgrade-insecure-requests">-->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>好享试</title>
   </head>
@@ -14,14 +14,30 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script type="text/javascript">
+        !function (e, t, n, g, i) {
+            e[i] = e[i] || function () {
+                (e[i].q = e[i].q || []).push(arguments)
+            }, n = t.createElement("script");
+            var tag = t.getElementsByTagName("script")[0];
+            n.async = 1;
+            n.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + g;
+
+            n.onload=function () {
+                if(returnCitySN){
+                    let cityCN = returnCitySN["cname"]
+                    let cityIp = returnCitySN["cip"]
+                    sessionStorage.setItem('_cip__', cityIp)
+                    sessionStorage.setItem('_cName__', cityCN)
+                }
+            };
+
+            tag.parentNode.insertBefore(n, tag)
+        }(window, document, "script", "pv.sohu.com/cityjson?ie=utf-8", "gio");
+
+    </script>
     <script>
-      if(returnCitySN){
-        let cityCN = returnCitySN["cname"]
-        let cityIp = returnCitySN["cip"]
-        sessionStorage.setItem('_cip__', cityIp)
-        sessionStorage.setItem('_cName__', cityCN)
-      }
+
 
     </script>
   </body>
