@@ -64,7 +64,6 @@ export default {
                 mobile: '',
                 password: '',
                 code: '',
-                openid: sessionStorage.getItem('short_time_openId'),
                 invitationCode:''
             }
         }
@@ -148,15 +147,15 @@ export default {
             api.logins.bindMobile(props).then(res => {
                 if(res.code == 200) {
                     sessionStorage.setItem('__openId__',props.openid)
+                    sessionStorage.setItem('__sessionId__',res.data.sessionId)
                     this.$toast('注册成功')
                     this.$router.go(-1);
                 }else {
                     this.$toast(res.message)
-                    this.$router.go(-1);
+                    // this.$router.go(-1);
                 }
             }).catch(err => {
                 this.$toast(err)
-                this.$router.go(-1);
             })
         }
     }

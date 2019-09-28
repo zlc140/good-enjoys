@@ -41,20 +41,20 @@ export default {
         if(to.query.id && to.query.type){
             sessionStorage.setItem('__query_obj__', JSON.stringify(to.query))
         }
-
         if(wechat.isWechat) {
             if(!to.query.code && !sessionStorage.getItem('__openId__')){
                 wechat.authorize()
                 return next(false);
             }else {
                 let checkOpen = sessionStorage.getItem('__openId__') ? false : to.query.code;
+
                 return next(vm => {
                     vm.getOpenId(checkOpen)
                     let datas = sessionStorage.getItem('__query_obj__')
                     if(datas) {
                         let {id, type} = JSON.parse(datas)
                         vm.$router.replace({
-                            path: '/wechat',
+                            path: '/details',
                             query: {
                                 id: id,
                                 type: type
@@ -73,25 +73,7 @@ export default {
         this.query = this.$route.query || JSON.parse(sessionStorage.getItem('__query_obj__'));
 
         this.getData()
-        // if(query.invitationCode) { //存储邀请码
-        //     sessionStorage.setItem('invitationCode', query.invitationCode)
-        // }
-        // if(!wechat.isWechat){
-        //     this.getData();
-        // }else if (query.id && query.type && !query.code && !sessionStorage.getItem('__openId__')) {
-        //
-        //     sessionStorage.setItem('__query_obj__', JSON.stringify(query))
-        //     //启动授权
-        //     if(!sessionStorage.getItem('isAuthorize')) {
-        //         sessionStorage.setItem('isAuthorize','true')
-        //         wechat.authorize()
-        //     }
-        // }else if(query.code && !sessionStorage.getItem('__openId__')){
-        //     const codevalue = query.code+ ''
-        //     this.getOpenId(codevalue)
-        // }else {
-        //     this.getData();
-        // }
+
     },
     methods: {
         getData() {
@@ -103,6 +85,31 @@ export default {
             }else {
                 this.$toast('请求参数不全，稍后重试')
             }
+            setTimeout(() => {
+                this.addSignin()
+            },20000)
+        },
+        addSignin() {
+            let query = this.query;
+            let type,sessionId=sessionStorage.getItem('__sessionId__')
+            if(!sessionId)return;
+            switch (query.type) {
+                case 'plantingGrass':
+                    type = 4;
+                    break;
+                case 'brand':
+                    type = 5;
+                    break;
+                case 'apply':
+                    type = 6;
+                    break;
+                default :
+                    type = ''
+                    break;
+            }
+            api.details.addSignin({type},sessionId).then(res => {
+                console.log(res)
+            }).catch(err => {console.log(err)})
         },
         /**
          * getDetail 获取品牌和种草详情
@@ -143,9 +150,9 @@ export default {
             let queryStr = sessionStorage.getItem('__query_obj__')
             let query = queryStr ?JSON.parse(queryStr) : null
             this.query = query;
-
+            console.log(1)
             if(!code && sessionStorage.getItem('__openId__')) {
-                this.getData()
+                // this.getData()
                 return;
             }
             // let url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx5db1f717b73bf215&secret=dcde7436b5beaa81ab21979d36ea1021&code='+code+'&grant_type=authorization_code'

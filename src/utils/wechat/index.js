@@ -18,11 +18,11 @@ function authorize() {
     // let urlData = Url.toObject(location.href);
 
     localStorage.setItem('ignoreCheckRegister','true');
-    // 避免页面授权死循环
+    // 避免页面授权死循环// window.location.protocol + '//' + window.location.host
     // if ( urlData.code && urlData.state === wxConf.state && localStorage.getItem(codeKey) === urlData.code) return localStorage.removeItem(codeKey);
     let option = {
         appid: wxConf.appId,
-        redirect_uri: window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.hash /*'http://weixin.lovego.com/#/pay' || 'http://mobile.tesb.lovego.xin/#/home/index' ||*/,
+        redirect_uri: 'http://www.viphxs.com'  + window.location.pathname + window.location.hash /*'http://weixin.lovego.com/#/pay' || 'http://mobile.tesb.lovego.xin/#/home/index' ||*/,
         response_type: 'code',
         scope: 'snsapi_userinfo',
         state: wxConf.state

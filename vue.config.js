@@ -41,6 +41,11 @@ module.exports = {
             },
             '/foo': {
                 target: '<other_url>'
+            },
+            '/app': {
+                target: 'https://www.viphxs.com:8080',
+                secure: false,
+                changeOrigin: true
             }
         }
     },

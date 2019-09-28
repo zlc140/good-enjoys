@@ -15,4 +15,9 @@ details.getApplyDetails = (params) => request({
     headers: { 'Content-Type': 'multipart/form-data' },
 });
 
+details.addSignin = (params, sessionId) => request({
+    url: `/app/signin?type=${params.type}`,
+    method: 'GET',
+    headers: { 'Content-Type': 'multipart/form-data','sessionId': sessionId },
+})
 export default details;
