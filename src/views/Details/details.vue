@@ -10,11 +10,11 @@
 <!--            <button>立即下载</button>-->
 <!--        </div>-->
         <div v-if="query.type == 'plantingGrass' || query.type == 'brand'">
-            <h2>{{ articleName }}</h2>
+<!--            <h2>{{ articleName }}</h2>-->
             <div class="detail-info" v-html="articleInfo"></div>
         </div>
         <div v-if="query.type == 'apply'">
-            <h2>{{ specstitle }}</h2>
+<!--            <h2>{{ specstitle }}</h2>-->
             <div class="detail-info" v-html="specsValues"></div>
         </div>
     </div>
@@ -83,7 +83,7 @@ export default {
             } else if (query.type === 'apply') {
                 this.getApplyDetail(query.id);
             }else {
-                this.$toast('请求参数不全，稍后重试')
+                // this.$toast('请求参数不全，稍后重试')
             }
             setTimeout(() => {
                 this.addSignin()
@@ -162,6 +162,7 @@ export default {
             api.logins.getOpenIdAndToken({ wxCode:code,loginType:3 }).then((res) => {
                 if(res.code == 200){
                     sessionStorage.setItem('__openId__', (res.data.unionid || res.data.openid))
+                    sessionStorage.setItem('__sessionId__',res.data.sessionId)
                     this.getData()
                 }else if(res.code == 501){ //授权成功但没有注册过
                     sessionStorage.setItem('short_time_openId', res.data.openid)
